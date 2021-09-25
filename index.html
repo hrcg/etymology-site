@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Albanian Etymology Site" />
+    <meta name="keywords" content="Etymology, Albanian, Search, Dictionary, Wiktionary" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="images/favicon/site.webmanifest" />
+    <title>Etimologji</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+</head>
+<div class="navbar">
+    <div class="container">
+        <a class="logo" href="/index.html">ETI<span>MOLOGJI</span></a>
+
+        <img id="mobile-cta" class="mobile-menu" src="images/assets/menu.svg" alt="Open Navigation" />
+
+        <nav>
+            <img id="mobile-exit" class="mobile-menu-exit" src="images/assets/exit.svg" alt="Close Navigation" />
+
+            <ul class="primary-nav">
+                <li class="current"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+
+            <ul class="secondary-nav">
+                <li class="go-premium-cta">
+                    <a href="#" target="_blank" rel="noopener noreferrer">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<section class="hero">
+    <div class="container">
+        <div class="left-col">
+            <p class="subhead">ETIMOLOGJI</p>
+            <h1>Kërko etimologjinë e një fjale.</h1>
+        </div>
+        <img src="https://pbs.twimg.com/media/E_3MUzfVIAETz06?format=jpg&name=orig" class="hero-img" alt="Illustration" />
+    </div>
+</section>
+<section>
+  <section class="hero">
+    <script>
+        var baseURL = "http://en.wiktionary.org";
+          function showPage(page, text) {
+            var sourceurl = baseURL + "/wiki/" + page;
+            $("#pagetitle").text(page);
+            $("#wikiInfo").html(text);
+            $("#sourceurl").attr("href", sourceurl);
+          }
+          $(document).ready(function () {
+            $("#pagetitle").hide();
+            $("#word").change(function () {
+              var page = this.value;
+              $("#wikiInfo").html("..searching");
+              $.getJSON(
+                baseURL +
+                  "/w/api.php?action=parse&format=json&prop=text|revid|displaytitle&callback=?&page=" +
+                  page,
+                function (json) {
+                  if (json.parse.revid > 0) {
+                    showPage(page, json.parse.text["*"]);
+                  } else {
+                    $("#wikiInfo").html("word not found");
+                  }
+                }
+              );
+            });
+          });
+        </script>
+      </head>
+      <body>
+        Kërko: <br>
+        <input type="text" id="word" />
+        <h1 id="pagetitle"></h1>
+        <div id="wikiInfo"></div>
+        </div>
+    </script>
+  </section>
+</section>
+<script src="js/app.js"></script>
+</body>
+
+</html>
